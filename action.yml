@@ -1,0 +1,34 @@
+name: "Azure Resource Manager (ARM) Template Deployment JS"
+description: "Use this GitHub Action task deploy an Azure Resource Manager (ARM) template"
+inputs:
+  scope:
+    description: "Provide the scope of the deployment. alid values are: 'resourcegroup', 'managementgroup', 'subscription'"
+    required: true
+  subscriptionId:
+    description: "Provide the Id of the subscription which should be used."
+    required: true
+  location:
+    description: "Provide the target region, only required for management Group or Subscription deployments."
+    required: false
+  resourceGroupName:
+    description: "Provide the name of a resource group."
+    required: false
+  templateLocation:
+    description: "Specify the path or URL to the Azure Resource Manager template."
+    required: true
+  deploymentMode:
+    description: "Incremental (only add resources to resource group) or Complete (remove extra resources from resource group)."
+    required: false
+    default: Incremental
+  deploymentName:
+    description: "Specifies the name of the resource group deployment to create."
+    required: false
+  parameters:
+    description: "Supply deployment parameter values."
+    required: false
+branding:
+  color: orange
+  icon: package
+runs:
+  using: "node12"
+  main: "dist/index.js"
