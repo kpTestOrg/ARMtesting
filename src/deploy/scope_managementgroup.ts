@@ -16,7 +16,6 @@ export async function DeployManagementGroupScope(azPath: string, validationOnly:
             templateLocation.startsWith("http") ? `--template-uri ${templateLocation}`: `--template-file ${templateLocation}`
         : undefined,
         managementGroupId ? `--management-group-id ${managementGroupId}` : undefined,
-        deploymentMode ? `--mode ${deploymentMode}` : undefined,
         deploymentName ? `--name ${deploymentName}` : undefined,
         parameters ? `--parameters ${parameters}` : undefined
     ].filter(Boolean).join(' ');
