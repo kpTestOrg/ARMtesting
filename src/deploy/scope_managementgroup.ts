@@ -6,7 +6,7 @@ import { info, warning } from '@actions/core';
 export async function DeployManagementGroupScope(azPath: string, validationOnly: boolean, location: string,  templateLocation: string, deploymentMode: string, deploymentName: string, parameters: string, managementGroupId: string): Promise<Outputs> {    
     // Check if location is set
     if (!location) {
-        throw Error("Location must be set.")
+        throw Error("Location must be set. zaruri hai.")
     }
     
     // create the parameter list
