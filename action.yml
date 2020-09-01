@@ -6,7 +6,10 @@ inputs:
     required: true
   subscriptionId:
     description: "Provide the Id of the subscription which should be used."
-    required: true
+    required: false
+  managementGroupId:
+    description: "Specify the Id for the Management Group, only required for Management Group Deployments."
+    required: false
   location:
     description: "Provide the target region, only required for management Group or Subscription deployments."
     required: false
@@ -25,6 +28,9 @@ inputs:
     required: false
   parameters:
     description: "Supply deployment parameter values."
+    required: false
+  validationOnly:
+    description: "Whenether the template should only be validated or also deployed. Valid values are: 'true', 'false'"
     required: false
 branding:
   color: orange

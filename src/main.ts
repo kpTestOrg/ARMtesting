@@ -21,22 +21,26 @@ export async function main(): Promise<Outputs> {
     const deploymentMode = getInput('deploymentMode')
     const deploymentName = getInput('deploymentName')
     const parameters = getInput('parameters')
+    const managementGroupId = getInput('managementGroupId')
+    const validationOnly = getInput('validationOnly') == 'true';
 
     // change the subscription context
-    info("Changing subscription context...")
-    await exec(`"${azPath}" account set --subscription ${subscriptionId}`, [], { silent: true })
+    if (scope != "managementgroup") {
+        info("Changing subscription context...")
+        await exec(`"${azPath}" account set --subscription ${subscriptionId}`, [], { silent: true })
+    }
 
     // Run the Deployment
     let result: Outputs = {};
     switch(scope) {
         case "resourcegroup":
-            result = await DeployResourceGroupScope(azPath, resourceGroupName, templateLocation, deploymentMode, deploymentName, parameters)
+            result = await DeployResourceGroupScope(azPath, validationOnly, resourceGroupName, templateLocation, deploymentMode, deploymentName, parameters)
             break
         case "managementgroup":
-            result = await DeployManagementGroupScope(azPath, location, templateLocation, deploymentMode, deploymentName, parameters)
+            result = await DeployManagementGroupScope(azPath, validationOnly, location, templateLocation, deploymentMode, deploymentName, parameters, managementGroupId)
             break
         case "subscription":
-            result = await DeploySubscriptionScope(azPath, location, templateLocation, deploymentMode, deploymentName, parameters)
+            result = await DeploySubscriptionScope(azPath, validationOnly, location, templateLocation, deploymentMode, deploymentName, parameters)
             break
         default:
             throw new Error("Invalid scope. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'")

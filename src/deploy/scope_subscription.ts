@@ -1,21 +1,25 @@
 import { exec } from '@actions/exec';
 import { ExecOptions } from '@actions/exec/lib/interfaces';
 import { ParseOutputs, Outputs } from '../utils/utils';
-import { info } from '@actions/core';
+import { info, warning } from '@actions/core';
 
-export async function DeploySubscriptionScope(azPath: string, location: string,  templateLocation: string, deploymentMode: string, deploymentName: string, parameters: string): Promise<Outputs> {    
+export async function DeploySubscriptionScope(azPath: string, validationOnly: boolean, location: string,  templateLocation: string, deploymentMode: string, deploymentName: string, parameters: string): Promise<Outputs> {    
     // Check if location is set
     if (!location) {
         throw Error("Location must be set.")
     }
     
+    // check if mode is set as this will be ignored
+    if (deploymentMode != "") {
+        warning("Deployment Mode is not supported for subscription scoped deployments, this parameter will be ignored!")
+    }
+
     // create the parameter list
     const azDeployParameters = [
         location ? `--location ${location}` : undefined,
         templateLocation ?
             templateLocation.startsWith("http") ? `--template-uri ${templateLocation}`: `--template-file ${templateLocation}`
         : undefined,
-        deploymentMode ? `--mode ${deploymentMode}` : undefined,
         deploymentName ? `--name ${deploymentName}` : undefined,
         parameters ? `--parameters ${parameters}` : undefined
     ].filter(Boolean).join(' ');
@@ -36,7 +40,12 @@ export async function DeploySubscriptionScope(azPath: string, location: string, 
 
     // validate the deployment
     info("Validating template...")
-    await exec(`"${azPath}" deployment sub validate ${azDeployParameters} -o json`, [], { silent: true, failOnStdErr: true });
+    var code = await exec(`"${azPath}" deployment sub validate ${azDeployParameters} -o json`, [], { silent: true, ignoreReturnCode: true });
+    if (validationOnly && code != 0) {
+        throw new Error("Template validation failed")
+    } else if (code != 0) {
+        warning("Template validation failed.")
+    }
 
     // execute the deployment
     info("Creating deployment...")
