@@ -18,7 +18,7 @@ There are a lot of [sample templates](https://github.com/Azure/azure-quickstart-
     scope: subscription 
     subscriptionId: c01d26c9-****-****-****-************ 
     region: centralus 
-    templates: [https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/emptyRG.json](https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/emptyRG.json) 
+    templates: https://raw.githubusercontent.com/Azure/azure-docs-json-samples/master/azure-resource-manager/emptyRG.json
     parameters: rgName=demoResourceGroup rgLocation=centralus
 
 More [Sample templates](https://github.com/Azure/azure-quickstart-templates/tree/master/subscription-deployments) can be found here. 
