@@ -3,10 +3,10 @@ import { ExecOptions } from '@actions/exec/lib/interfaces';
 import { ParseOutputs, Outputs } from '../utils/utils';
 import { info, warning } from '@actions/core';
 
-export async function DeploySubscriptionScope(azPath: string, validationOnly: boolean, region: string, templates: string, deploymentMode: string, deploymentName: string, parameters: string): Promise<Outputs> {
+export async function DeploySubscriptionScope(azPath: string, validationOnly: boolean, region: string, template: string, deploymentMode: string, deploymentName: string, parameters: string): Promise<Outputs> {
     // Check if region is set
     if (!region) {
-        throw Error("region must be set.")
+        throw Error("Region must be set.")
     }
 
     // check if mode is set as this will be ignored
@@ -17,8 +17,8 @@ export async function DeploySubscriptionScope(azPath: string, validationOnly: bo
     // create the parameter list
     const azDeployParameters = [
         region ? `--location ${region}` : undefined,
-        templates ?
-            templates.startsWith("http") ? `--template-uri ${templates}` : `--template-file ${templates}`
+        template ?
+            template.startsWith("http") ? `--template-uri ${template}` : `--template-file ${template}`
             : undefined,
         deploymentName ? `--name ${deploymentName}` : undefined,
         parameters ? `--parameters ${parameters}` : undefined
