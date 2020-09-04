@@ -59,8 +59,6 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
         throw new Error("Template validation failed")
     } else if (code != 0) {
         core.warning("Template validation failed.")
-    } else{
-        core.debug(code);
     }
 
     // execute the deployment
