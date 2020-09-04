@@ -40,7 +40,7 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
                     commandOutput += data;
                 // console.log(data);
             },
-            stdout: (data: string) => {
+            stdout: (data: BufferSource) => {
                     commandOutput += data;
                 // console.log(data);
             }
