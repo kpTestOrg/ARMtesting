@@ -2,6 +2,7 @@ import * as core from '@actions/core';
 import { exec } from '@actions/exec';
 import { ExecOptions } from '@actions/exec/lib/interfaces';
 import { ParseOutputs, Outputs } from '../utils/utils';
+import {EOL} from 'os';
 
 export async function DeployResourceGroupScope(azPath: string, validationOnly: boolean, resourceGroupName: string, template: string, deploymentMode: string, deploymentName: string, parameters: string): Promise<Outputs> {
     // Check if resourceGroupName is set
@@ -62,7 +63,7 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     }
 
     // execute the deployment
-    core.info("Creating deploymentn...")
+    core.info("Creating deployment...")
     await exec(`"${azPath}" deployment group create ${azDeployParameters} -o json`, [], deployOptions);
     core.debug(JSON.stringify(JSON.parse(commandOutput))+EOL);
 
