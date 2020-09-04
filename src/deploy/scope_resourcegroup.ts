@@ -64,7 +64,7 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     // execute the deployment
     core.info("Creating deploymentn...")
     await exec(`"${azPath}" deployment group create ${azDeployParameters} -o json`, [], deployOptions);
-    core.debug(JSON.stringify(JSON.parse(commandOutput))+"\n");
+    core.debug(JSON.stringify(JSON.parse(commandOutput))+EOL);
 
     // Parse the Outputs
     core.info("Parsing outputs...")
