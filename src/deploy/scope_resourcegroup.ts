@@ -38,8 +38,8 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
             },
             stdline: (data: string) => {
                 if (!data.startsWith("[command]"))
-                    commandOutput += data;
-                    commandOutput += EOL;
+                {commandOutput += data;
+                    commandOutput += EOL;}
                 // console.log(data);
             },
         }
