@@ -2,7 +2,6 @@ import * as core from '@actions/core';
 import { exec } from '@actions/exec';
 import { ExecOptions } from '@actions/exec/lib/interfaces';
 import { ParseOutputs, Outputs } from '../utils/utils';
-import {EOL} from 'os';
 
 export async function DeployResourceGroupScope(azPath: string, validationOnly: boolean, resourceGroupName: string, template: string, deploymentMode: string, deploymentName: string, parameters: string): Promise<Outputs> {
     // Check if resourceGroupName is set
@@ -38,12 +37,8 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
             },
             stdline: (data: string) => {
                 if (!data.startsWith("[command]"))
-                {
                     commandOutput += data;
-                    commandOutput += EOL;
-                     commandOutput += "abc";
                 // console.log(data);
-                }
             },
         }
     }
@@ -58,7 +53,7 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     }
 
     // validate the deployment
-    core.info("Validating template...")
+    core.core.info("Validating template...")
     var code = await exec(`"${azPath}" deployment group validate ${azDeployParameters} -o json`, [], validateOptions);
     if (validationOnly && code != 0) {
         throw new Error("Template validation failed")
@@ -67,11 +62,11 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     }
 
     // execute the deployment
-    core.info("Creating deployment...")
+    core.core.info("Creating deployment...")
     await exec(`"${azPath}" deployment group create ${azDeployParameters} -o json`, [], deployOptions);
-    core.debug(JSON.stringify(JSON.parse(commandOutput))+EOL);
-
+    core.debug(commandOutput);
+    
     // Parse the Outputs
-    core.info("Parsing outputs...")
+    core.core.info("Parsing outputs...")
     return ParseOutputs(commandOutput)
 }
