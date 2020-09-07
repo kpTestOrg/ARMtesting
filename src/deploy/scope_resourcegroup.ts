@@ -41,7 +41,7 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
                 {
                     commandOutput += data;
                     commandOutput += EOL;
-                     commandOutput += abc;
+                     commandOutput += "abc";
                 // console.log(data);
                 }
             },
