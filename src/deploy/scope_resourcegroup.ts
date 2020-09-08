@@ -53,7 +53,11 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     }
 
     // validate the deployment
+<<<<<<< HEAD
     core.info("Validating template...")
+=======
+    core.core.info("Validating template...")
+>>>>>>> 686c72358197526551e52d2871e5891a25343106
     var code = await exec(`"${azPath}" deployment group validate ${azDeployParameters} -o json`, [], validateOptions);
     if (validationOnly && code != 0) {
         throw new Error("Template validation failed")
@@ -62,11 +66,19 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     }
 
     // execute the deployment
+<<<<<<< HEAD
     core.info("Creating deployment...")
+=======
+    core.core.info("Creating deployment...")
+>>>>>>> 686c72358197526551e52d2871e5891a25343106
     await exec(`"${azPath}" deployment group create ${azDeployParameters} -o json`, [], deployOptions);
     core.debug(commandOutput);
     
     // Parse the Outputs
+<<<<<<< HEAD
     core.info("Parsing outputs...")
+=======
+    core.core.info("Parsing outputs...")
+>>>>>>> 686c72358197526551e52d2871e5891a25343106
     return ParseOutputs(commandOutput)
 }
