@@ -30,10 +30,11 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     let commandOutput = '';
     const deployOptions: ExecOptions = {
         silent: true,
+        ignoreReturnCode: true,
         failOnStdErr: true,
         listeners: {
             stderr: (data: BufferSource) => {
-                core.warning(data.toString());
+                core.error(data.toString());
             },
             stdline: (data: string) => {
                 if (!data.startsWith("[command]"))
@@ -53,32 +54,23 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
     }
 
     // validate the deployment
-<<<<<<< HEAD
     core.info("Validating template...")
-=======
-    core.core.info("Validating template...")
->>>>>>> 686c72358197526551e52d2871e5891a25343106
     var code = await exec(`"${azPath}" deployment group validate ${azDeployParameters} -o json`, [], validateOptions);
     if (validationOnly && code != 0) {
-        throw new Error("Template validation failed")
+        throw new Error("Template validation failed.")
     } else if (code != 0) {
         core.warning("Template validation failed.")
     }
 
     // execute the deployment
-<<<<<<< HEAD
     core.info("Creating deployment...")
-=======
-    core.core.info("Creating deployment...")
->>>>>>> 686c72358197526551e52d2871e5891a25343106
-    await exec(`"${azPath}" deployment group create ${azDeployParameters} -o json`, [], deployOptions);
+    var deploymentCode = await exec(`"${azPath}" deployment group create ${azDeployParameters} -o json`, [], deployOptions);
+    if (deploymentCode != 0) {
+        core.error("Deployment failed.")
+    }
     core.debug(commandOutput);
-    
+
     // Parse the Outputs
-<<<<<<< HEAD
     core.info("Parsing outputs...")
-=======
-    core.core.info("Parsing outputs...")
->>>>>>> 686c72358197526551e52d2871e5891a25343106
     return ParseOutputs(commandOutput)
 }
