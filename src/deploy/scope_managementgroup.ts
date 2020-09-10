@@ -21,7 +21,7 @@ export async function DeployManagementGroupScope(azPath: string, validationOnly:
             : undefined,
         managementGroupId ? `--management-group-id '${managementGroupId}'` : undefined,
         deploymentName ? `--name '${deploymentName}'` : undefined,
-        parameters ? `--parameters '${parameters}'` : undefined
+        parameters ? `--parameters ${parameters}` : undefined
     ].filter(Boolean).join(' ');
 
     // configure exec to write the json output to a buffer
