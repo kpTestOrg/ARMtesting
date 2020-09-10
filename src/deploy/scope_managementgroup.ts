@@ -69,6 +69,6 @@ export async function DeployManagementGroupScope(azPath: string, validationOnly:
     core.debug(commandOutput);
 
     // Parse the Outputs
-    core.info("Parsing outputs...")
+    core.info("Parsingg outputs...")
     return ParseOutputs(commandOutput)
 }
