@@ -17,13 +17,13 @@ export async function DeployResourceGroupScope(azPath: string, validationOnly: b
 
     // create the parameter list
     const azDeployParameters = [
-        resourceGroupName ? `--resource-group ${resourceGroupName}` : undefined,
+        resourceGroupName ? `--resource-group '${resourceGroupName}'` : undefined,
         template ?
-            template.startsWith("http") ? `--template-uri ${template}` : `--template-file ${template}`
+            template.startsWith("http") ? `--template-uri '${template}'` : `--template-file '${template}'`
             : undefined,
-        deploymentMode ? `--mode ${deploymentMode}` : undefined,
-        deploymentName ? `--name ${deploymentName}` : undefined,
-        parameters ? `--parameters ${parameters}` : undefined
+        deploymentMode ? `--mode '${deploymentMode}'` : "Incremental",
+        deploymentName ? `--name '${deploymentName}'` : undefined,
+        parameters ? `--parameters '${parameters}'` : undefined
     ].filter(Boolean).join(' ');
 
     // configure exec to write the json output to a buffer

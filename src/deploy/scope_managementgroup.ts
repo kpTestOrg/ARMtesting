@@ -15,13 +15,13 @@ export async function DeployManagementGroupScope(azPath: string, validationOnly:
     }
     // create the parameter list
     const azDeployParameters = [
-        region ? `--location ${region}` : undefined,
+        region ? `--location '${region}'` : undefined,
         template ?
-            template.startsWith("http") ? `--template-uri ${template}` : `--template-file ${template}`
+            template.startsWith("http") ? `--template-uri '${template}'` : `--template-file '${template}'`
             : undefined,
-        managementGroupId ? `--management-group-id ${managementGroupId}` : undefined,
-        deploymentName ? `--name ${deploymentName}` : undefined,
-        parameters ? `--parameters ${parameters}` : undefined
+        managementGroupId ? `--management-group-id '${managementGroupId}'` : undefined,
+        deploymentName ? `--name '${deploymentName}'` : undefined,
+        parameters ? `--parameters '${parameters}'` : undefined
     ].filter(Boolean).join(' ');
 
     // configure exec to write the json output to a buffer
