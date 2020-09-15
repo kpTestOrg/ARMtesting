@@ -73,4 +73,5 @@ export async function DeploySubscriptionScope(azPath: string, region: string, te
         core.info("Parsing outputs...")
         return ParseOutputs(commandOutput)
     }
+        return ParseOutputs('');
 }
