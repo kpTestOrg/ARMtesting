@@ -10,7 +10,7 @@ export async function DeploySubscriptionScope(azPath: string, region: string, te
     }
 
     // check if mode is set as this will be ignored
-    if (deploymentMode.toLowerCase() != "validate") {
+    if (deploymentMode && deploymentMode.toLowerCase() != "validate") {
         core.warning("This deployment mode is not supported for subscription scoped deployments, this parameter will be ignored!")
     }
 
@@ -67,10 +67,10 @@ export async function DeploySubscriptionScope(azPath: string, region: string, te
         if (deploymentCode != 0) {
             core.error("Deployment failed.")
         }
-    }
-    core.debug(commandOutput);
+        core.debug(commandOutput);
 
-    // Parse the Outputs
-    core.info("Parsing outputs...")
-    return ParseOutputs(commandOutput)
+        // Parse the Outputs
+        core.info("Parsing outputs...")
+        return ParseOutputs(commandOutput)
+    }
 }
