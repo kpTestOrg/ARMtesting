@@ -69,10 +69,11 @@ export async function DeployResourceGroupScope(azPath: string, resourceGroupName
         if (deploymentCode != 0) {
             core.error("Deployment failed.")
         }
-    }
-    core.debug(commandOutput);
+        core.debug(commandOutput);
 
-    // Parse the Outputs
-    core.info("Parsing outputs...")
-    return ParseOutputs(commandOutput)
+        // Parse the Outputs
+        core.info("Parsing outputs...")
+        return ParseOutputs(commandOutput)
+    }
+    return ParseOutputs('');
 }
