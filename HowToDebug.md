@@ -1,4 +1,4 @@
-Temp change
+Temp change################################
 **Debugging the ARM action in local machine**
 
 Open PowerShell, go to the directory where the repo is stored (.../arm-deploy/) and execute the following commands.
